@@ -76,7 +76,7 @@ app.get('/player', (req, res) => {
     
     connection.connect()
     
-    connection.query('insert into score values (null, "'+req.body.bevitel1+'", "'+req.body.bevitel2+'", "'+req.body.bevitel3+'", CURDATE(), "'+req.body.bevitel4+'")', (err, rows, fields) => {
+    connection.query('insert into score values (null, '+req.body.bevitel1+', '+req.body.bevitel2+', '+req.body.bevitel3+', CURDATE(), "'+req.body.bevitel4+'")', (err, rows, fields) => {
       if (err) throw err
     
       res.send("Sikerült a felvitel!")
