@@ -31,7 +31,7 @@ const connection = mysql.createConnection({
 app.get('/player', (req, res) => {
     connection.connect()
     
-    connection.query('SELECT * from test', (err, rows, fields) => {
+    connection.query('SELECT * from player', (err, rows, fields) => {
       if (err) throw err
     
       console.log(rows)
@@ -47,7 +47,7 @@ app.get('/player', (req, res) => {
     console.log("username: " + username);
     
     connection.connect()
-    connection.query(`insert into test values (null, '`+username+`', CURDATE())`, (err, rows, fields) => {
+    connection.query(`insert into player values (null, '`+username+`', CURDATE())`, (err, rows, fields) => {
       if (err) throw err
     
       res.send("Sikerült a felvitel! ")
@@ -58,21 +58,15 @@ app.get('/player', (req, res) => {
 
 
   //-----------------------------------------  score felvitel
-  app.post('/newscore', (req, res) => {
-
-    let newscore = bufferFile("adat.txt");
-    console.log("newscore: " + newscore);
-
-    let tomb = newscore.split(' ');
-
-    let playerid = tomb[0]
-    let palyaid = tomb[1]
-    let points = tomb[2]
-    let playtime = tomb[3]
-
+  app.post('/newscore', (req, res) => {  
+    let playerid = bufferFile("playerid.txt")
+    let palyaid = bufferFile("palyaid.txt");
+    let score = bufferFile("score.txt")
+    let time = bufferFile("time.txt")
 
     connection.connect()
-    connection.query('insert into score values (null, '+playerid+', '+palyaid+', '+points+', CURDATE(), "'+playtime+'")', (err, rows, fields) => {
+    
+    connection.query('insert into score values (null, '+playerid+', '+palyaid+', '+score+', CURDATE(), "'+time+'")', (err, rows, fields) => {
       if (err) throw err
     
       res.send("Sikerült a felvitel! ")
