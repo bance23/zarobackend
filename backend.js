@@ -54,11 +54,9 @@ app.post('/newplayer', (req, res) => {
     password: '',
     database: 'colorball'
   })
-  let username = bufferFile("username.txt");
-  console.log("username: " + username);
 
   connection.connect()
-  connection.query(`insert into player values (null, '` + username + `', CURDATE())`, (err, rows, fields) => {
+  connection.query(`insert into player values (null, '` + req.body.bevitel1 + `', CURDATE())`, (err, rows, fields) => {
     if (err) throw err
 
     res.send("Sikerült a felvitel! ")
@@ -76,14 +74,9 @@ app.post('/newscore', (req, res) => {
     password: '',
     database: 'colorball'
   })
-  let playerid = bufferFile("playerid.txt")
-  let palyaid = bufferFile("palyaid.txt");
-  let score = bufferFile("score.txt")
-  let time = bufferFile("time.txt")
 
   connection.connect()
-
-  connection.query('insert into score values (null, ' + playerid + ', ' + palyaid + ', ' + score + ', CURDATE(), "' + time + '")', (err, rows, fields) => {
+  connection.query('insert into score values (null, ' + req.body.bevitel1 + ', ' + req.body.bevitel2 + ', ' + req.body.bevitel3 + ', CURDATE(), "' + req.body.bevitel4 + '")', (err, rows, fields) => {
     if (err) throw err
 
     res.send("Sikerült a felvitel! ")
@@ -101,12 +94,9 @@ app.post('/newpalya', (req, res) => {
     password: '',
     database: 'colorball'
   })
-
-  let palya_name = bufferFile("ppalyanev.txt");
-
   connection.connect()
 
-  connection.query('insert into palya values (null, ' + palya_name + ')', (err, rows, fields) => {
+  connection.query('insert into palya values (null, "' + req.body.bevitel1 + '")', (err, rows, fields) => {
     if (err) throw err
 
     res.send("Sikerült a felvitel! ")
