@@ -28,6 +28,26 @@ app.get('/player', (req, res) => {
   connection.end()
 })
 
+//------------------------     login adatok lekérdezése
+app.get('/login', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('SELECT * from login', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
 //-----------------------------------------  player felvitel
 app.post('/newplayer', (req, res) => {
   const connection = mysql.createConnection({
