@@ -106,6 +106,8 @@ app.get('/toplist', (req, res) => {
   connection.end()
 })
 
+//szoszi szöszi
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
