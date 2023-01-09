@@ -126,7 +126,25 @@ app.get('/toplist', (req, res) => {
   connection.end()
 })
 
-//szoszi szöszi
+
+//-----------------------------------------  login update
+app.post('/loginUpdate', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  connection.query('UPDATE login SET username="' + req.body.bevitel1 + '", password="' + req.body.bevitel2 + '" WHERE username = "' + req.body.bevitel3 + '"', (err, rows, fields) => {
+    if (err) throw err
+    
+    console.log(req.body.bevitel3)
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
