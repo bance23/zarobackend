@@ -183,7 +183,7 @@ app.post('/loginUpdate', (req, res) => {
   connection.query('UPDATE login SET username="' + req.body.bevitel1 + '", password="' + req.body.bevitel2 + '" WHERE username="' + req.body.bevitel3 + '"', (err, rows, fields) => {
     if (err) throw err
     
-    //console.log(req.body.bevitel3)
+    console.log(req.body.bevitel3)
     res.send("Modositas sikeres!")
   })
 
