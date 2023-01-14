@@ -28,6 +28,49 @@ app.get('/player', (req, res) => {
   connection.end()
 })
 
+
+//------------------------     palya adatok lekérdezése
+app.get('/palya', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('SELECT * from palya', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
+
+//
+//------------------------     score adatok lekérdezése
+app.get('/score', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('SELECT * from score', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
 //------------------------     login adatok lekérdezése
 app.get('/login', (req, res) => {
   const connection = mysql.createConnection({
@@ -107,7 +150,7 @@ app.post('/newpalya', (req, res) => {
   connection.end()
 })
 
-app.get('/toplist', (req, res) => {
+app.post('/toplist', (req, res) => {
   const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -136,7 +179,8 @@ app.post('/loginUpdate', (req, res) => {
     database: 'colorball'
   })
   connection.connect()
-  connection.query('UPDATE login SET username="' + req.body.bevitel1 + '", password="' + req.body.bevitel2 + '" WHERE username = "' + req.body.bevitel3 + '"', (err, rows, fields) => {
+  
+  connection.query('UPDATE login SET username="' + req.body.bevitel1 + '", password="' + req.body.bevitel2 + '" WHERE username="' + req.body.bevitel3 + '"', (err, rows, fields) => {
     if (err) throw err
     
     console.log(req.body.bevitel3)
@@ -145,6 +189,144 @@ app.post('/loginUpdate', (req, res) => {
 
   connection.end()
 })
+
+
+//-----------------------------------------  player update
+app.post('/playerUpdate', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  
+  connection.query('UPDATE player SET player_name="' + req.body.bevitel1 + '", player_join_date="' + req.body.bevitel2 + '" WHERE player_name="' + req.body.bevitel3 + '"', (err, rows, fields) => {
+    if (err) throw err
+    
+    console.log(req.body.bevitel2)
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
+
+//-----------------------------------------  score update
+app.post('/scoreUpdate', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  
+  connection.query('UPDATE score SET score_playerid="' + req.body.bevitel1 + '", score_palyaid="' + req.body.bevitel2 + '", score_points="' + req.body.bevitel3 + '", score_date="' + req.body.bevitel4 + '", score_time="' + req.body.bevitel5 + '" WHERE score_id = "' + req.body.bevitel6 + '"', (err, rows, fields) => {
+    if (err) throw err
+
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
+
+
+//-----------------------------------------  palya update
+app.post('/palyaUpdate', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  
+  connection.query('UPDATE palya SET palya_name="' + req.body.bevitel1 + '" WHERE palya_id="' + req.body.bevitel2 + '"', (err, rows, fields) => {
+    if (err) throw err
+    
+    //console.log(req.body.bevitel3)
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
+
+//-----------------------------------------  login Delete
+app.post('/loginDelete', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  
+  connection.query('DELETE FROM login WHERE username="' + req.body.bevitel1 + '"', (err, rows, fields) => {
+    if (err) throw err
+  
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
+
+//-----------------------------------------  palya Delete
+app.post('/palyaDelete', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  
+  connection.query('DELETE FROM palya WHERE palya_id="' + req.body.bevitel1 + '"', (err, rows, fields) => {
+    if (err) throw err
+  
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
+
+//-----------------------------------------  player Delete
+app.post('/playerDelete', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  
+  connection.query('DELETE FROM player WHERE player_id="' + req.body.bevitel1 + '"', (err, rows, fields) => {
+    if (err) throw err
+  
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
+
+//-----------------------------------------  score Delete
+app.post('/scoreDelete', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+  
+  connection.query('DELETE FROM score WHERE score_id="' + req.body.bevitel1 + '"', (err, rows, fields) => {
+    if (err) throw err
+  
+    res.send("Modositas sikeres!")
+  })
+
+  connection.end()
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
