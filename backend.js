@@ -1,4 +1,3 @@
-const fs = require('fs');
 const express = require('express')
 const mysql = require('mysql')
 const app = express()
@@ -7,6 +6,49 @@ var cors = require('cors')
 
 app.use(express.json())
 app.use(cors())
+
+//------------------------     player coin get
+app.get('/coinget', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('SELECT Coin_coin from coin where Coin_playerid = '+req.body.bevitel1+'', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
+
+//------------------------     player coin update
+app.get('/coinUpdate', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('UPDATE Coin_coin from coin where Coin_playerid = '+req.body.bevitel1+'', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
+
 
 //------------------------     játékos adatok lekérdezése
 app.get('/player', (req, res) => {
@@ -121,7 +163,27 @@ app.post('/newscore', (req, res) => {
   })
 
   connection.connect()
-  connection.query('insert into score values (null, ' + req.body.bevitel1 + ', ' + req.body.bevitel2 + ', ' + req.body.bevitel3 + ', CURDATE(), "' + req.body.bevitel4 + '")', (err, rows, fields) => {
+  connection.query('insert into score values (null, ' + req.body.bevitel1 + ', ' + req.body.bevitel2 + ', CURDATE(), "' + req.body.bevitel3 + '")', (err, rows, fields) => {
+    if (err) throw err
+
+    res.send("Sikerült a felvitel! ")
+  })
+
+  connection.end()
+})
+
+//
+//-----------------------------------------  username kereses
+app.post('/newscore', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+
+  connection.connect()
+  connection.query('insert into score values (null, ' + req.body.bevitel1 + ', ' + req.body.bevitel2 + ', CURDATE(), "' + req.body.bevitel3 + '")', (err, rows, fields) => {
     if (err) throw err
 
     res.send("Sikerült a felvitel! ")
@@ -159,7 +221,7 @@ app.post('/toplist', (req, res) => {
   })
   connection.connect()
 
-  connection.query('SELECT player.player_name, score.score_points, score.score_time FROM `score` INNER JOIN player ON player.player_id = score.score_playerid WHERE score.score_palyaid = ' + req.body.bevitel1 + ' ORDER BY score.score_points DESC LIMIT 10', (err, rows, fields) => {
+  connection.query('SELECT player.player_name, score.score_points, score.score_time FROM `score` INNER JOIN player ON player.player_id = score.score_playerid ORDER BY score.score_points DESC LIMIT 10', (err, rows, fields) => {
     if (err) throw err
 
     console.log(rows)
