@@ -8,6 +8,12 @@ app.use(express.json())
 app.use(cors())
 
 //------------------------     player coin get
+app.get('/', (req, res) => {
+  res.send("Hello World")
+})
+
+
+//------------------------     player coin get
 app.get('/coinget', (req, res) => {
   const connection = mysql.createConnection({
     host: 'localhost',
