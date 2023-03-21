@@ -174,7 +174,7 @@ app.post('/newscore', (req, res) => {
 
 //
 //-----------------------------------------  username kereses
-app.post('/newscore', (req, res) => {
+app.post('/valami', (req, res) => {
   const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -212,7 +212,7 @@ app.post('/newpalya', (req, res) => {
   connection.end()
 })
 
-app.post('/toplist', (req, res) => {
+app.get('/toplist', (req, res) => {
   const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
