@@ -395,6 +395,24 @@ app.post('/scoreDelete', (req, res) => {
   connection.end()
 })
 
+app.get('/rekord', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('SELECT score.score_points, score.score_time FROM `score` INNER JOIN player ON player.player_id = score.score_playerid WHERE player_id="' + req.body.bevitel1 + '" ORDER BY score.score_points DESC LIMIT 1', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
