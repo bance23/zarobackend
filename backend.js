@@ -1,7 +1,7 @@
 const express = require('express')
 const mysql = require('mysql')
 const app = express()
-const port = 3000
+const port = 24002
 var cors = require('cors')
 
 app.use(express.json())
@@ -22,6 +22,7 @@ app.get('/coinget', (req, res) => {
     database: 'colorball'
   })
   connection.connect()
+  console.log("coins" + req.body.bevitel1);
 
   connection.query('SELECT Coin_coin from coin where Coin_playerid = '+req.body.bevitel1+'', (err, rows, fields) => {
     if (err) throw err
@@ -34,8 +35,8 @@ app.get('/coinget', (req, res) => {
 })
 
 
-//------------------------     player coin update
-app.get('/coinUpdate', (req, res) => {
+//------------------------     player coin get
+app.get('/coin', (req, res) => {
   const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -44,7 +45,48 @@ app.get('/coinUpdate', (req, res) => {
   })
   connection.connect()
 
-  connection.query('UPDATE Coin_coin from coin where Coin_playerid = '+req.body.bevitel1+'', (err, rows, fields) => {
+  connection.query('SELECT * from coin', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
+
+//------------------------     player coin get
+app.post('/coinDelete', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('DELETE FROM palya WHERE palya_id="' + req.body.bevitel1 + '"', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
+//------------------------     player coin update
+app.post('/coinUpdate', (req, res) => {
+  const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'colorball'
+  })
+  connection.connect()
+
+  connection.query('UPDATE coin set Coin_coin='+req.body.bevitel1+' where Coin_playerid = '+req.body.bevitel2+'', (err, rows, fields) => {
     if (err) throw err
 
     console.log(rows)
