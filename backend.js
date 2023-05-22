@@ -122,6 +122,27 @@ app.post('/coinUpdate', (req, res) => {
   connection.end()
 })
 
+//------------------------     player coin update
+app.post('/newcoin', (req, res) => {
+  const connection = mysql.createConnection({
+    host: host,
+    user: user,
+    password: password,
+    database: database,
+    port: portdb,
+  })
+  connection.connect()
+
+  connection.query('INSERT INTO coin VALUES ("'+req.body.bevitel1+'", "'+req.body.bevitel2+'")', (err, rows, fields) => {
+    if (err) throw err
+
+    console.log(rows)
+    res.send(rows)
+  })
+
+  connection.end()
+})
+
 
 
 //------------------------     játékos adatok lekérdezése
@@ -225,7 +246,7 @@ app.post('/newplayer', (req, res) => {
   connection.query(`insert into player values (null, '` + req.body.bevitel1 + `', CURDATE())`, (err, rows, fields) => {
     if (err) throw err
 
-    res.send("Sikerült a felvitel! ")
+    res.send("Uj username!")
   })
 
   connection.end()
